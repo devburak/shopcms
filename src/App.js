@@ -5,6 +5,8 @@ import { CssBaseline, StyledEngineProvider } from '@mui/material';
 import themes from './themes';
 import config from './config';
 import Login from "./pages/login";
+// routing
+import Routes from './routes';
 function App() {
 
   const initialState = {
@@ -20,7 +22,7 @@ function App() {
       <ThemeProvider theme={themes(initialState)}>
         <CssBaseline />
 
-        <Login />
+        <Routes />
       </ThemeProvider>
     </StyledEngineProvider>
   );
