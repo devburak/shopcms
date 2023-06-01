@@ -1,4 +1,5 @@
 const config = {
+    name:"shop CMS",
     version:'1.0.1',
     versionNumber:1.01,
     basename: '',

@@ -4,9 +4,11 @@ import { CssBaseline, StyledEngineProvider } from '@mui/material';
 // defaultTheme
 import themes from './themes';
 import config from './config';
-import Login from "./pages/login";
 // routing
 import Routes from './routes';
+//context Providers
+import { MenuProvider } from './store/menu/menuContext';
+
 function App() {
 
   const initialState = {
@@ -18,13 +20,14 @@ function App() {
   };
 
   return (
+    <MenuProvider >
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themes(initialState)}>
         <CssBaseline />
-
         <Routes />
       </ThemeProvider>
     </StyledEngineProvider>
+    </MenuProvider>
   );
 }
 
