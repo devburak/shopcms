@@ -2,7 +2,7 @@
 import { Typography } from '@mui/material';
 
 // project imports
-import MainCard from '../layout/cards/mainCard';
+import MainCard from '../layout/area/mainCard';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // material-ui
 import { Box } from '@mui/material';
 // project import
-import MainCard from '../cards/mainCard';
+import MainCard from '../area/mainCard';
 import { styled } from '@mui/material/styles';
 // ==============================|| AUTHENTICATION CARD WRAPPER ||============================== //
 
