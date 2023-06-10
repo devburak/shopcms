@@ -11,11 +11,13 @@ const initialState = {
 export const MenuContext = createContext();
 
 const menuReducer = (state, action) => {
+  let id;
   switch (action.type) {
     case 'MENU_OPEN':
+      id = action.id;
       return {
         ...state,
-        isOpen: [...state.isOpen, action.id]
+        isOpen: [id]
       };
     case 'MENU_CLOSE':
       return {
