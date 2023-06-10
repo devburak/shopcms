@@ -9,6 +9,7 @@ import Loadable from '../layout/loadable';
 const Dashboard = Loadable(lazy(() => import('../pages/dasboard')));
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('../pages/sample')));
+const ProductPage = Loadable(lazy(() => import('../pages/product')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -23,6 +24,10 @@ const MainRoutes = {
     {
       path: 'sample-page',
       element: <SamplePage />
+    },
+    {
+      path: 'product',
+      element: <ProductPage />
     }
   ]
 };

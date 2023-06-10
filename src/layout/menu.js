@@ -22,13 +22,21 @@ const dashboard = {
     title: 'Sample Page',
     type: 'group',
     children: [
+      
         {id: 'sample-page',
         title: 'Sample Page',
         type: 'item',
         url: '/sample-page',
         icon: ExplicitIcon,
         breadcrumbs: false
-      }
+      },
+      {id: 'product',
+      title: 'Product Page',
+      type: 'item',
+      url: '/product',
+      icon: ExplicitIcon,
+      breadcrumbs: false
+    }
     ]
   };
 
@@ -43,7 +51,6 @@ const dashboard = {
         title: 'SERVICE TERM',
         type: 'collapse',
         icon: ArticleIcon,
-  
         children: [
           {
             id: 'login',

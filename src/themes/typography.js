@@ -128,6 +128,16 @@ export default function themeTypography(theme) {
       width: '44px',
       height: '44px',
       fontSize: '1.5rem'
+    },
+    multilineText:{
+      '& > label': {
+        top: 10,
+        left: 0,
+        color: theme.grey500,
+        '&[data-shrink="false"]': {
+          top: 5
+        }
+      },
     }
   };
 }

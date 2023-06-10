@@ -1,6 +1,32 @@
 export default function componentStyleOverrides(theme) {
   const bgColor = theme.colors?.grey50;
   return {
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          color: theme.darkTextPrimary,
+          paddingTop: '3px',
+          paddingBottom: '3px', 
+          '&.Mui-selected': {
+            color: theme.menuSelected,
+            backgroundColor: theme.menuSelectedBack,
+            '&:hover': {
+              backgroundColor: theme.menuSelectedBack
+            },
+            '& .MuiListItemIcon-root': {
+              color: theme.menuSelected
+            }
+          },
+          '&:hover': {
+            backgroundColor: theme.menuSelectedBack,
+            color: theme.menuSelected,
+            '& .MuiListItemIcon-root': {
+              color: theme.menuSelected
+            }
+          }
+        }
+      }
+    },
     MuiButton: {
       styleOverrides: {
         root: {
@@ -111,7 +137,8 @@ export default function componentStyleOverrides(theme) {
             borderColor: theme.colors?.primaryLight
           },
           '&.MuiInputBase-multiline': {
-            padding: 1
+            padding: 1,
+            marginTop:12
           }
         },
         input: {
@@ -180,6 +207,50 @@ export default function componentStyleOverrides(theme) {
         tooltip: {
           color: theme.paper,
           background: theme.colors?.grey700
+        }
+      }
+    },
+    MuiAutocomplete: {
+      styleOverrides: {
+        root: {
+          background: bgColor,
+          borderRadius: `${theme?.customization?.borderRadius}px`,
+          '&.MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.colors?.grey400
+          },
+          '&:hover $notchedOutline': {
+            borderColor: theme.colors?.primaryLight
+          },
+          '&.MuiInputBase-multiline': {
+            padding: 1,
+            marginTop:12
+          }
+        },
+        input: {
+          fontWeight: 500,
+          background: bgColor,
+          padding: '15.5px 14px',
+          borderRadius: `${theme?.customization?.borderRadius}px`,
+          '&.MuiInputBase-inputSizeSmall': {
+            padding: '10px 14px',
+            '&.MuiInputBase-inputAdornedStart': {
+              paddingLeft: 0
+            }
+          },
+          label:{ paddingTop:12},
+          '&.MuiFormLabel':{
+            root:{
+              paddingTop:12
+            }
+        },
+        inputAdornedStart: {
+          paddingLeft: 4
+        },
+        notchedOutline: {
+          borderRadius: `${theme?.customization?.borderRadius}px`
+        }
+       
+          
         }
       }
     }
