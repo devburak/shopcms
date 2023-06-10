@@ -8,7 +8,7 @@ import config from './config';
 import Routes from './routes';
 //context Providers
 import { MenuProvider } from './store/menu/menuContext';
-
+import { UserProvider } from './store/user/userContext';
 function App() {
 
   const initialState = {
@@ -21,12 +21,14 @@ function App() {
 
   return (
     <MenuProvider >
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={themes(initialState)}>
-        <CssBaseline />
-        <Routes />
-      </ThemeProvider>
-    </StyledEngineProvider>
+      <UserProvider>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={themes(initialState)}>
+            <CssBaseline />
+            <Routes />
+          </ThemeProvider>
+        </StyledEngineProvider>
+      </UserProvider>
     </MenuProvider>
   );
 }
