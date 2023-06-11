@@ -31,9 +31,21 @@ import { useFormik } from 'formik';
 import useScriptRef from '../hook/useScriptRef';
 import AnimateButton from '../components/animateButton';
 import ToggleLanguage from '../components/toggleLanguage';
-import FileUploader from '../components/fileUploader';
+import FileUploader from '../components/file/fileUploader';
+
 //multilanguae Support
 // import { name, allergens, content, confirm , price} from '../store/multiLanguageConstant'
+
+const defaultFiles = [{
+    _id: "6484a11c65555515a498072a",
+    fileName: "2023_1.jpeg",
+    size: 135259,
+    mimeType: "image/jpeg",
+    fileUrl: "https://xfs2.ikon-x.com.tr/lemonbistro/2023_1.jpeg",
+    thumbnailUrl: "https://xfs2.ikon-x.com.tr/lemonbistro/thumbnails/th_2023_1.webp",
+    uploadedBy: "64733699b76cf2a894853020",
+    uploadedAt: "2023-06-10T16:13:16.493Z"
+}]
 const Product = ({ ...others }) => {
     const theme = useTheme();
 
@@ -105,7 +117,7 @@ const Product = ({ ...others }) => {
             </Grid>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <FileUploader />
+                    <FileUploader  defaultFiles={defaultFiles}/>
                 </Grid>
             </Grid>
             <form noValidate onSubmit={formik.handleSubmit} >

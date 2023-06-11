@@ -146,6 +146,7 @@ export default function themeTypography(theme) {
       fontSize: '1.2rem',
       color: theme.heading,
       padding: '6px',
+      border:'1px dashed',
       '& > p':{
         color:  theme.darkTextSecondary,
       }
