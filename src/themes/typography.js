@@ -138,6 +138,17 @@ export default function themeTypography(theme) {
           top: 5
         }
       },
+    },
+    dragZone:{
+      display:'flex',
+      justifyContent:'center',
+      height: '64px',
+      fontSize: '1.2rem',
+      color: theme.heading,
+      padding: '6px',
+      '& > p':{
+        color:  theme.darkTextSecondary,
+      }
     }
   };
 }

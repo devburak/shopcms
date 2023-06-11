@@ -25,13 +25,13 @@ import { UserContext } from '../store/user/userContext';
 
 // third party
 import * as Yup from 'yup';
-import { Formik, useFormik } from 'formik';
+import { useFormik } from 'formik';
 
 // project imports
 import useScriptRef from '../hook/useScriptRef';
 import AnimateButton from '../components/animateButton';
 import ToggleLanguage from '../components/toggleLanguage';
-
+import FileUploader from '../components/fileUploader';
 //multilanguae Support
 // import { name, allergens, content, confirm , price} from '../store/multiLanguageConstant'
 const Product = ({ ...others }) => {
@@ -102,7 +102,11 @@ const Product = ({ ...others }) => {
                         <Typography variant="subtitle1">{formik.values.name || 'Produkt Form'}</Typography>
                     </Box>
                 </Grid>
-
+            </Grid>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <FileUploader />
+                </Grid>
             </Grid>
             <form noValidate onSubmit={formik.handleSubmit} >
                 <Grid container direction="row" justifyContent="center" spacing={2}>
