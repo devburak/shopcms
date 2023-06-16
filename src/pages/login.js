@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-
+import { useContext } from 'react';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
@@ -9,13 +9,13 @@ import {AuthWrapper} from '../layout/wrappers/authCardWrapper';
 import AuthCardWrapper from '../layout/wrappers/authCardWrapper';
 import AuthLogin from '../forms/auth';
 import AuthFooter from '../layout/footer';
-
+import { UserContext } from '../store/user/userContext';
 // ================================|| AUTH - LOGIN ||================================ //
 
 const Login = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
-
+  const {state} = useContext(UserContext)
   return (
     <AuthWrapper>
       <Grid container direction="column" justifyContent="flex-end" sx={{ minHeight: '100vh' }}>
@@ -34,7 +34,7 @@ const Login = () => {
                       <Grid item>
                         <Stack alignItems="center" justifyContent="center" spacing={1}>
                           <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
-                            Hi, Welcome Back
+                            Hi, Welcome Back {state.name}
                           </Typography>
                         </Stack>
                       </Grid>

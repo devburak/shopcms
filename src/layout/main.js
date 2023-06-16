@@ -6,6 +6,7 @@ import { drawerWidth } from '../store/constant';
 import Sidebar from './sidebar/sidebar'
 import { useContext } from 'react';
 import { MenuContext } from '../store/menu/menuContext';
+import Header from './header';
 // styles
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
     ...theme.typography.mainContent,
@@ -65,9 +66,9 @@ const MainLayout = () => {
                     transition: leftDrawerOpened ? theme.transitions.create('width') : 'none'
                 }}
             >
-                {/* <Toolbar>
+                <Toolbar>
           <Header handleLeftDrawerToggle={handleLeftDrawerToggle} />
-        </Toolbar> */}
+        </Toolbar>
             </AppBar>
             <Sidebar drawerOpen={!matchDownMd ? leftDrawerOpened : !leftDrawerOpened} drawerToggle={handleLeftDrawerToggle} />
             <Main theme={theme} open={leftDrawerOpened}>

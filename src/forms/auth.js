@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState,useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -25,20 +26,21 @@ import { Formik } from 'formik';
 // project imports
 import useScriptRef from '../hook/useScriptRef';
 import AnimateButton from '../components/animateButton';
-
+import { UserContext } from '../store/user/userContext';
 // assets
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-
+import api from '../api';
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const LoginForm = ({ ...others }) => {
   const theme = useTheme();
   const scriptedRef = useScriptRef();
-  const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
+  const navigate = useNavigate();
+  // const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const [checked, setChecked] = useState(true);
-
+  const {state,dispatch} = useContext(UserContext)
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -47,6 +49,20 @@ const LoginForm = ({ ...others }) => {
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+  };
+
+  const getUserProfile = async () => {
+    try {
+      const response = await api.get('/api/profile');
+      const { username, role , userId,name,email,phone } = response.data?.user;
+      if (username && role && userId && !state.isLoggedIn) {
+        
+        dispatch({ type: 'LOGIN', payload:{isLoggedIn: true, username, role, userId, name:'aaa', email, phone} });
+      }
+    } catch (error) {
+      // Hata durumunda gerekli işlemler
+      console.log('profile alınamadı')
+    }
   };
 
   return (
@@ -62,47 +78,56 @@ const LoginForm = ({ ...others }) => {
 
       <Formik
         initialValues={{
-          email: '',
+          identifier: '',
           password: '',
           submit: null
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+          identifier: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
           password: Yup.string().max(255).required('Password is required')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-          try {
-            if (scriptedRef.current) {
+         
+            try {
+              const response = await api.post('/api/user/login', values);
+              const { accessToken, refreshToken } = response.data;
+        
+              sessionStorage.setItem('accessToken', accessToken);
+              sessionStorage.setItem('refreshToken', refreshToken);
+               await  getUserProfile();
+              if (scriptedRef.current) {
               setStatus({ success: true });
               setSubmitting(false);
-            }
-          } catch (err) {
-            console.error(err);
-            if (scriptedRef.current) {
+              }
+               navigate("/" ,{replace:true })
+           
+            } catch (error) {
+              if (scriptedRef.current) {
               setStatus({ success: false });
-              setErrors({ submit: err.message });
+              setErrors({ submit: error.message });
               setSubmitting(false);
+              }
             }
-          }
+          
         }}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit} {...others}>
-            <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
+            <FormControl fullWidth error={Boolean(touched.identifier && errors.identifier)} sx={{ ...theme.typography.customInput }}>
               <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-email-login"
                 type="email"
-                value={values.email}
-                name="email"
+                value={values.identifier}
+                name="identifier"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 label="Email Address / Username"
                 inputProps={{}}
               />
-              {touched.email && errors.email && (
+              {touched.identifier && errors.identifier && (
                 <FormHelperText error id="standard-weight-helper-text-email-login">
-                  {errors.email}
+                  {errors.identifier}
                 </FormHelperText>
               )}
             </FormControl>

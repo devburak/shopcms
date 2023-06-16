@@ -91,7 +91,6 @@ const Product = ({ ...others }) => {
         setSelectedCategories(value)
         formik.setFieldValue(`categories`, value);
     }
-
     useEffect(() => {
         // fill from service it just fakedata 
         setCategories([
@@ -105,7 +104,6 @@ const Product = ({ ...others }) => {
             }
         ])
     }, [])
-
     return (
         <>
             <Grid container direction="row" justifyContent="center" spacing={2}>

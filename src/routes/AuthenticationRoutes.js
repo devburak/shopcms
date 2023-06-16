@@ -10,7 +10,6 @@ const Signup = Loadable(lazy(() => import('../pages/signup')));
 const MinimalLayout = () => (
   <>
     <Outlet />
-   
   </>
 );
 // ==============================|| AUTHENTICATION ROUTING ||============================== //

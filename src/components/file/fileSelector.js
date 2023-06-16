@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import { Modal, Box, IconButton,Checkbox ,TextField , Button} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PropTypes from 'prop-types';
 
 const defaultFiles = [{
@@ -30,11 +30,11 @@ const Thumbnail = styled(Box)(({ theme }) =>  ({
       position: 'absolute',
       top: -10,
       right: -10,
-      backgroundColor: theme.palette.common.white,
+      color: theme.palette.error.main,
+    //   backgroundColor: theme.palette.common.white,
     },
     '& .check-button': {
         position: 'absolute',
-        backgroundColor: theme.palette.common.white,
         bottom: -10,
         left: -10,
         zIndex: 1
@@ -76,16 +76,17 @@ const FileSelector = ({ open, handleClose, images,selectedImages,handleToggleIma
       }>
         <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: theme.spacing(1) }}>
           <TextField
-            label="Search"
+            label="Suchen"
             variant="outlined"
             value={searchText}
+            fullWidth
             onChange={handleSearchTextChange}
             size="small"
             sx={{ marginRight: theme.spacing(2) }}
           />
-          <Button variant="contained">Search</Button>
+           <p>{selectedImages.length} ausgewählt</p>
         </Box>
-             
+    
         {images.map((image, index) => (
           <Thumbnail key={index}>
                 <Checkbox
@@ -101,7 +102,7 @@ const FileSelector = ({ open, handleClose, images,selectedImages,handleToggleIma
                 className="delete-icon"
                 onClick={() => handleDeleteImage(index)}
               >
-                <CloseIcon />
+                <DeleteForeverIcon />
               </IconButton>
             
           </Thumbnail>

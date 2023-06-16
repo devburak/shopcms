@@ -79,14 +79,12 @@ const FileUploader = ({defaultFiles}) => {
 
 
   return (
-    <Grid container>
-      <Grid item sm={2} xs={6}>
-        <Button  onClick={()=>setOpenFileSelector(true)} > vom Server</Button>
+    <Grid container >
+      <Grid item sm={4} xs={12}  display={'flex'}>
+        <Button  fullWidth onClick={()=>setOpenFileSelector(true)} > vom Server</Button>
         <FileSelector open={openFileSelector} handleClose={handleCloseFileSelector} selectedImages={selectedImages} handleToggleImage={handleToggleImage} />
       </Grid>
-      <Grid item sm={2} xs={6}>
-
-      </Grid>
+     
       <Grid item xs={12} sm={8}>
         <Box sx={{
           ...theme.typography.dragZone,
