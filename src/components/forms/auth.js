@@ -24,14 +24,14 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project imports
-import useScriptRef from '../hook/useScriptRef';
-import AnimateButton from '../components/animateButton';
-import { UserContext } from '../store/user/userContext';
+import useScriptRef from '../../hook/useScriptRef';
+import AnimateButton from '../animateButton';
+import { UserContext } from '../../store/user/userContext';
 // assets
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-import api from '../api';
+import api from '../../api';
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const LoginForm = ({ ...others }) => {

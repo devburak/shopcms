@@ -20,18 +20,16 @@ import {
     TextField,
     Autocomplete
 } from '@mui/material';
-import { UserContext } from '../store/user/userContext';
 
-
+import { UserContext } from '../../store/user/userContext';
 // third party
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 
 // project imports
-import useScriptRef from '../hook/useScriptRef';
-import AnimateButton from '../components/animateButton';
-import ToggleLanguage from '../components/toggleLanguage';
-import FileUploader from '../components/file/fileUploader';
+import useScriptRef from '../../hook/useScriptRef';
+import AnimateButton from '../animateButton';
+import FileUploader from '../file/fileUploader';
 
 //multilanguae Support
 // import { name, allergens, content, confirm , price} from '../store/multiLanguageConstant'

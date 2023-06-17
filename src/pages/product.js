@@ -1,7 +1,7 @@
 
 // project imports
 import MainCard from '../layout/area/mainCard';
-import Product from '../forms/product';
+import Product from '../components/forms/product';
 const ProductPage = () => (
     <MainCard title="Produktkarte">
         <Product/>

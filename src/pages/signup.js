@@ -10,7 +10,7 @@ import {AuthWrapper} from '../layout/wrappers/authCardWrapper';
 import AuthCardWrapper from '../layout/wrappers/authCardWrapper';
 // import AuthLogin from '../forms/auth';
 import AuthFooter from '../layout/footer';
-import Register from '../forms/register';
+import Register from '../components/forms/register';
 
 // assets
 

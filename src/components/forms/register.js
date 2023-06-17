@@ -26,9 +26,9 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project imports
-import useScriptRef from '../hook/useScriptRef';
-import AnimateButton from '../components/animateButton';
-import { strengthColor, strengthIndicator } from '../utils/password-strength';
+import useScriptRef from '../../hook/useScriptRef';
+import AnimateButton from '../animateButton';
+import { strengthColor, strengthIndicator } from '../../utils/password-strength';
 
 // assets
 import VisibilityIcon from '@mui/icons-material/Visibility';
