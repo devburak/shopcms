@@ -41,7 +41,7 @@ export default function ThemeRoutes() {
             <>
               <Route path="/" element={<Dashboard />} />
               <Route path="/sample-page" element={<SamplePage />} />
-              <Route path="/product" element={<ProductPage />} />
+              <Route path="/product/:productId?" element={<ProductPage />} />
             </>
           ) : (
             <Route path="/login" element={<Login />} />

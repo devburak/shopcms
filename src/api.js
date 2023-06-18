@@ -5,8 +5,12 @@ const api = axios.create({
   baseURL: config.baseURL,
   timeout: 1000,
 });
-
+// Cancel Token ve Source oluşturma
+api.CancelToken = axios.CancelToken;
+api.isCancel = axios.isCancel
+api.Controller  = new AbortController();
 let navigate;
+
 
 api.setNavigate = (navigateInstance) => {
   navigate = navigateInstance;
