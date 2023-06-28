@@ -13,7 +13,8 @@ const Dashboard = Loadable(lazy(() => import('../pages/dasboard')));
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('../pages/sample')));
 const ProductPage = Loadable(lazy(() => import('../pages/product')));
-
+const CategoryListPage = Loadable(lazy(() => import('../pages/categoryList')));
+const CategoryPage = Loadable(lazy(() => import('../pages/category')));
 // login option 3 routing
 const Login = Loadable(lazy(() => import('../pages/login')));
 const Signup = Loadable(lazy(() => import('../pages/signup')));
@@ -42,6 +43,8 @@ export default function ThemeRoutes() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/sample-page" element={<SamplePage />} />
               <Route path="/product/:productId?" element={<ProductPage />} />
+              <Route path="/categories" element={<CategoryListPage />} />
+              <Route path="/category/:categoryId?" element={<CategoryPage />} />
             </>
           ) : (
             <Route path="/login" element={<Login />} />

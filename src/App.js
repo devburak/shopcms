@@ -8,6 +8,7 @@ import config from './config';
 import Routes from './routes';
 import { UserContext } from './store/user/userContext';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import api from './api';
 function App() {
   const navigate = useNavigate();
@@ -69,10 +70,9 @@ function App() {
 
 
   return (
-   
-
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={themes(initialState)}>
+          <ToastContainer />
             <CssBaseline />
             <Routes />
           </ThemeProvider>

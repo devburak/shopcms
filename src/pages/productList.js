@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ProductListForm from './ProductListForm';
-import { getProductList, deleteProduct } from '../api/productApi';
+
 
 const ProductListPage = () => {
   const history = useHistory();

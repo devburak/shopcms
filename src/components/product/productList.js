@@ -65,7 +65,7 @@ ProductListForm.propTypes = {
         })
       ).isRequired,
     })
-  ).isRequired,
+  ),
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
