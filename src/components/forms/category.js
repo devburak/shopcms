@@ -37,6 +37,10 @@ const CategoryForm = ({ initialValues, onSubmit }) => {
         setImageUrl(selectedImageUrl);
     };
 
+    const handleFileSelection = (files) => {
+        // Handle file selection logic here
+        console.log('Selected files:', files);
+      };
 
     return (
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} enableReinitialize>
@@ -88,6 +92,7 @@ const CategoryForm = ({ initialValues, onSubmit }) => {
                                     images={initialValues?.imageUrl|| []}
                                     selectedImages={imageUrl ? [imageUrl] : []}
                                     handleToggleImage={handleSelectImage}
+                                    handleFileSelection={handleFileSelection}
                                 />
                             </Grid>
                         </Grid>

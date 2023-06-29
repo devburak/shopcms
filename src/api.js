@@ -3,7 +3,7 @@ import axios from 'axios';
 import config from './config';
 const api = axios.create({
   baseURL: config.baseURL,
-  timeout: 1000,
+  timeout: 10000,
 });
 // Cancel Token ve Source oluşturma
 api.CancelToken = axios.CancelToken;
@@ -32,7 +32,7 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     const refreshToken = sessionStorage.getItem('refreshToken');
-    if (error.response.status === 401 && !originalRequest._retry && refreshToken) {
+    if (error?.response?.status === 401 && !originalRequest._retry && refreshToken) {
       originalRequest._retry = true;
 
       try {
@@ -56,6 +56,9 @@ api.interceptors.response.use(
         // Örneğin, kullanıcıyı oturum açma sayfasına yönlendirebilirsiniz
        navigate('/login');
       }
+    }else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
     }
 
     return Promise.reject(error);
