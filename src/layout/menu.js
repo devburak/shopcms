@@ -1,6 +1,7 @@
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ArticleIcon from '@mui/icons-material/Article';
 import ExplicitIcon from '@mui/icons-material/Explicit';
+import CategoryIcon from '@mui/icons-material/Category';
 const dashboard = {
     id: 'dashboard',
     title: 'Dashboard',
@@ -71,10 +72,42 @@ const dashboard = {
     ]
   };
 
+const categories = {
+    id: 'categories',
+    title: 'Categories',
+    caption: 'Categories Operation',
+    type: 'group',
+    children: [
+      {
+        id: 'category',
+        title: 'Categories',
+        type: 'collapse',
+        icon: CategoryIcon,
+  
+        children: [
+          {
+            id: 'newCategory',
+            title: 'New Category',
+            type: 'item',
+            url: '/category',
+            target: false
+          },
+          {
+            id: 'listCategory',
+            title: 'Categories',
+            type: 'item',
+            url: '/categories',
+            target: false
+          }
+        ]
+      }
+    ]
+  };
 const menuItems = {
     items: [
         dashboard, 
         pages, 
+        categories,
        sample
     ]
   };
