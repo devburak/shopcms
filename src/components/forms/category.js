@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Grid, TextField, IconButton } from '@mui/material';
-import { Formik, Form, Field, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import * as yup from 'yup';
 import ImageIcon from '@mui/icons-material/Image';
 
@@ -27,12 +27,7 @@ const ImagePreview = ({ image, buttonClick }) => {
     );
 };
 
-
-
-
 const CategoryForm = ({ initialValues, onSubmit }) => {
-
-
     const formik = useFormik(
         {
             initialValues: initialValues,
@@ -40,8 +35,7 @@ const CategoryForm = ({ initialValues, onSubmit }) => {
             onSubmit: values => {
                 console.log(values);
                 onSubmit(values)
-            },
-            
+            }, 
         }
     );
 
@@ -128,8 +122,8 @@ const CategoryForm = ({ initialValues, onSubmit }) => {
                         <FileSelector
                             open={openSelector}
                             handleClose={() => setOpenSelector(false)}
-                            selectedImages={image}
-                            handleToggleImage={handleSelectImage}
+                            selectedFiles={image}
+                            handleToggleFiles={handleSelectImage}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -139,66 +133,6 @@ const CategoryForm = ({ initialValues, onSubmit }) => {
                     </Grid>
                 </Grid>
             </form>
-            {/* <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} enableReinitialize>
-                {({ values, setFieldValue }) => (
-                    <Form>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <TextField
-                                    name="title"
-                                    label="Title"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={values.title}
-                                    onChange={(event) => {
-                                        setFieldValue('title', event.target.value);
-                                        if (!initialValues.slug) {
-                                            const slug = createSlug(event.target.value);
-                                            setFieldValue('slug', slug);
-                                        }
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    name="description"
-                                    label="Description"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={values.description}
-                                    onChange={(event) => setFieldValue('description', event.target.value)}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    name="slug"
-                                    label="Slug"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={values.slug}
-                                    onChange={(event) => setFieldValue('slug', event.target.value)}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Grid item xs={12}>
-                                    <ImagePreview image={image ? image : []} buttonClick={() => setOpenSelector(true)} />
-                                    <FileSelector
-                                        open={openSelector}
-                                        handleClose={() => setOpenSelector(false)}
-                                        selectedImages={image}
-                                        handleToggleImage={handleSelectImage}
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Button type="submit" variant="contained" color="primary">
-                                    Submit
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Form>
-                )}
-            </Formik> */}
         </>
 
     );
