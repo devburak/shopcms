@@ -46,7 +46,7 @@ const Thumbnail = styled(Box)(({ theme }) => ({
   }
 }));
 
-const FileSelector = ({ open, handleClose, selectedImages, handleToggleImage }) => {
+const FileSelector = ({ open, handleClose, selectedFiles, handleToggleFiles,acceptedFiles="image/*" }) => {
   const theme = useTheme();
   const { state } = useContext(UserContext);
 
@@ -61,11 +61,6 @@ const FileSelector = ({ open, handleClose, selectedImages, handleToggleImage }) 
   const thumbnailBoxRef = useRef(null);
 
   const handleDeleteImage = (image) => {
-    // Handle image deletion logic here
-    console.log('Deleting image at index', image);
-    console.log(state)
-
-
     if (state.role === 'admin' || (state.role !== 'admin' && image.uploadedBy === state.userId)) {
       api.delete('/api/file/delete/' + image._id).then(response=>{
         fetchFiles(searchText);
@@ -95,6 +90,7 @@ const FileSelector = ({ open, handleClose, selectedImages, handleToggleImage }) 
     // Handle dropped files logic here
     console.log('Dropped files:', acceptedFiles);
   };
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop: handleDrop, noClick: true });
   const fileInputRef = useRef(null);
   const handleFileInputClick = () => {
@@ -257,7 +253,7 @@ const FileSelector = ({ open, handleClose, selectedImages, handleToggleImage }) 
                 <Button fullWidth variant="contained" color="primary" onClick={handleFileInputClick}>
                   From Computer
                 </Button>
-                <input type="file" multiple style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileInputChange} />
+                <input type="file" accept={acceptedFiles} multiple style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileInputChange} />
               </Box>
             </Box>
             <Box
@@ -278,10 +274,10 @@ const FileSelector = ({ open, handleClose, selectedImages, handleToggleImage }) 
                   <Checkbox
                     size='small'
                     className='check-button'
-                    checked={selectedImages.some((selectedImage) => selectedImage._id === image._id)}
-                    onChange={() => handleToggleImage(image)}
+                    checked={selectedFiles.some((selectedImage) => selectedImage._id === image._id)}
+                    onChange={() => handleToggleFiles(image)}
                   />
-                  <img src={image.thumbnailUrl} alt={image.fileName} onClick={() => handleToggleImage(image)} />
+                  <img src={image.thumbnailUrl} alt={image.fileName} onClick={() => handleToggleFiles(image)} />
 
                   {shouldShowDeleteButton(image) && (
                     <IconButton
