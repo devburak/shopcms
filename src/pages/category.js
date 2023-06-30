@@ -13,18 +13,18 @@ const Category = () => {
         title: '',
         description: '',
         slug: '',
-        imageUrl: '',
+        image: {},
     });
 
     const handleSubmit = async (values) => {
         try {
           if (categoryId) {
             // Kategori güncelleme isteği
-            await api.put(`/api/category/${categoryId}`, values);
+            await api.put(`/api/category/${categoryId}`, {...values,image:values?.image?._id ||null});
             GenericAlert.success('Category successfully updated!');
           } else {
             // Yeni kategori oluşturma isteği
-            await api.post('/api/category', values);
+            await api.post('/api/category', {...values,image:values?.image?._id ||null});
             GenericAlert.success('Category successfully created!');
           }
         } catch (error) {

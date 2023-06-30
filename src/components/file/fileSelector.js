@@ -278,10 +278,10 @@ const FileSelector = ({ open, handleClose, selectedImages, handleToggleImage }) 
                   <Checkbox
                     size='small'
                     className='check-button'
-                    checked={selectedImages.includes(index)}
-                    onChange={() => handleToggleImage(index)}
+                    checked={selectedImages.some((selectedImage) => selectedImage._id === image._id)}
+                    onChange={() => handleToggleImage(image)}
                   />
-                  <img src={image.thumbnailUrl} alt={image.fileName} onClick={() => handleToggleImage(index)} />
+                  <img src={image.thumbnailUrl} alt={image.fileName} onClick={() => handleToggleImage(image)} />
 
                   {shouldShowDeleteButton(image) && (
                     <IconButton
