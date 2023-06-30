@@ -20,55 +20,45 @@ import {
     TextField,
     Autocomplete
 } from '@mui/material';
+import ImageIcon from '@mui/icons-material/Image';
 
 import { UserContext } from '../../store/user/userContext';
 // third party
-import * as Yup from 'yup';
+import * as yup from 'yup';
 import { useFormik } from 'formik';
 
 // project imports
 import useScriptRef from '../../hook/useScriptRef';
 import AnimateButton from '../animateButton';
 import FileUploader from '../file/fileUploader';
+import api from '../../api';
+import FileSelector from '../file/fileSelector';
 
-//multilanguae Support
-// import { name, allergens, content, confirm , price} from '../store/multiLanguageConstant'
 
-const defaultFiles = [{
-    _id: "6484a11c65555515a498072a",
-    fileName: "2023_1.jpeg",
-    size: 135259,
-    mimeType: "image/jpeg",
-    fileUrl: "https://xfs2.ikon-x.com.tr/lemonbistro/2023_1.jpeg",
-    thumbnailUrl: "https://xfs2.ikon-x.com.tr/lemonbistro/thumbnails/th_2023_1.webp",
-    uploadedBy: "64733699b76cf2a894853020",
-    uploadedAt: "2023-06-10T16:13:16.493Z"
-}]
-const Product = ({ ...others }) => {
+const validationSchema = yup.object().shape({
+    name: yup.string().required('Title is required'),
+    content: yup.string().required('Description is required'),
+    allergenWarnings: yup.string().required('Slug is required')
+});
+
+const Product = ({ initialValues, onSubmit }) => {
     const theme = useTheme();
 
     const formik = useFormik(
         {
-            initialValues: {
-                name: '',
-                content: '',
-                allergenWarnings: '',
-                salesType: null,
-                categories: [
-
-                ],
-                price: null,
-                submit: null
-            },
+            initialValues: {...initialValues,storedFiles: []} ,
+            validationSchema,
             onSubmit: values => {
+                onSubmit(values)
                 console.log(values);
             },
         }
     );
 
-    const [categories, setCategories] = useState([])
-    const [selectedCategories, setSelectedCategories] = useState([]);
-    const [inputValue, setInputValue] = useState('')
+    const [categories, setCategories] = useState([]);
+    const [inputValue, setInputValue] = useState('');
+    const [openSelector, setOpenSelector] = useState(false);
+    const [images, setImages] = useState([]);
 
     const handleChangeName = (event) => {
         formik.setFieldValue(`name`, event.target.value);
@@ -86,34 +76,102 @@ const Product = ({ ...others }) => {
     };
 
     const handleChangeSelectedCategory = (value) => {
-        setSelectedCategories(value)
         formik.setFieldValue(`categories`, value);
     }
+
     useEffect(() => {
-        // fill from service it just fakedata 
-        setCategories([
-            {
-                id: "qwer2134",
-                name: "test"
-            },
-            {
-                id: "rr21123",
-                name: "deneme"
-            }
-        ])
+        // Kategorilerin alınması
+        api.get("/api/category/all")
+            .then((response) => {
+                setCategories(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }, [])
+
+    useEffect(() => {
+        console.log(initialValues)
+        if (initialValues) {
+          formik.setValues(initialValues);
+        }
+      }, [initialValues]);
+
+      useEffect(() => {
+        console.log('Stored Files:', formik.values.storedFiles);
+        // diğer işlemler...
+      }, [formik.values.storedFiles]);
+
+       // Resim seçme işlevi
+    const handleSelectImages = (file) => {
+        console.log('Selected File:', file);
+        console.log('storedFiles:', formik.values.storedFiles);
+        const storedFiles = formik.values.storedFiles || [];
+
+        const imageIndex = storedFiles.findIndex((image) => image._id === file._id);
+        if (imageIndex !== -1) {
+          // Image exists in the array, remove it
+          const updatedStoredFiles = storedFiles.filter((image) => image._id !== file._id);
+          formik.setFieldValue('storedFiles', updatedStoredFiles);
+        } else {
+          // Image does not exist in the array, add it
+          const updatedStoredFiles = [...storedFiles, file];
+          formik.setFieldValue('storedFiles', updatedStoredFiles);
+        }
+        // setImages((prevSelectedImages) => {
+        //     const imageIndex = prevSelectedImages.findIndex((image) => image._id === file._id);
+        //     if (imageIndex !== -1) {
+        //         // Image exists in the array, remove it
+        //         return prevSelectedImages.filter((image) => image._id !== file._id);
+        //     } else {
+        //         // Image does not exist in the array, add it
+        //         return [...prevSelectedImages, file];
+        //     }
+        // });
+    };
+
+    useEffect(()=>{
+        formik.setFieldValue('storedFiles', images);
+        // console.log('formik Values' ,  formik.values.storedFiles )
+        // if(images?.length){
+        //     formik.setFieldValue('storedFiles', images);
+        // }else{
+        //     formik.setFieldValue('storedFiles', []);
+        // }
+
+        console.log('formik Values' ,  formik.values.storedFiles )
+        console.log(images)
+    },[images])
+    
     return (
         <>
             <Grid container direction="row" justifyContent="center" spacing={2}>
-                <Grid item xs={12} container alignItems="center" justifyContent="flex-start">
+                <Grid item xs={6} container alignItems="center" justifyContent="flex-start">
                     <Box sx={{ mb: 2 }}>
-                        <Typography variant="subtitle1">{formik.values.name || 'Produkt Form'}</Typography>
+                        <Typography variant="subtitle1">{formik.values.name || 'Product Form'}</Typography>
                     </Box>
+                </Grid>
+                <Grid item xs={6} container alignItems="center" justifyContent="flex-end">
+                    <Button variant="outlined"  onClick={()=>setOpenSelector(true)} startIcon={<ImageIcon />}>
+                        Choose Image
+                    </Button>
+                    <FileSelector
+                        open={openSelector}
+                        handleClose={() => setOpenSelector(false)}
+                        selectedFiles={images}
+                        handleToggleFiles={handleSelectImages}
+                    />
                 </Grid>
             </Grid>
             <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <FileUploader  defaultFiles={defaultFiles}/>
+                <Grid item xs={12} sx={{ overflowX: 'auto' }}>
+                  {
+                    formik.values.storedFiles.map((file, index) => (
+                        <Box key={index} sx={{ mb: 2 }}>  
+                          <img src={file?.thumbnailUrl} alt={file?.filename} onClick={()=>handleSelectImages(file)} />
+                        </Box>
+                        ))
+                  }
                 </Grid>
             </Grid>
             <form noValidate onSubmit={formik.handleSubmit} >
@@ -134,7 +192,7 @@ const Product = ({ ...others }) => {
                             fullWidth
                             sx={ theme.typography.multilineText}
                             error={Boolean(formik.touched.content && formik.errors.content) || !formik.values.content} 
-                            label="Inhalt"
+                            label="Content"
                             id="adornment-content-register" type="text"
                             value={formik.values.content || ''}
                             multiline={true}
@@ -147,7 +205,7 @@ const Product = ({ ...others }) => {
                         <TextField
                             fullWidth
                             sx={ theme.typography.multilineText}
-                            label="Allergene"
+                            label="Allergens"
                             id="dornment-allergenWarnings-register" type="text"
                             value={formik.values.allergenWarnings || ''}
                             multiline={true}
@@ -159,7 +217,7 @@ const Product = ({ ...others }) => {
                     <Grid item sm={6} xs={12} container alignItems="center" justifyContent="flex-start">
                         <TextField
                             fullWidth
-                            label="Preis"
+                            label="Price"
                             id="outlined-adornment-price-register" type="number"
                             value={formik.values.price || ''}
                             name="allergenWarnings"
@@ -169,7 +227,8 @@ const Product = ({ ...others }) => {
                     <Grid item sm={6} xs={12} container alignItems="center" justifyContent="flex-start">
                         <Autocomplete
                             fullWidth
-                            value={selectedCategories}
+                            value={formik.values.categories}
+                            isOptionEqualToValue={(option, value) => option._id === value._id}
                             onChange={(event, newValue) => {
                                 console.log(newValue)
                                 handleChangeSelectedCategory(newValue)
@@ -178,7 +237,7 @@ const Product = ({ ...others }) => {
                                 value.map((option, index) => (
                                   <Chip
                                     variant="outlined"
-                                    label={option.name}
+                                    label={option.title}
                                     size="small"
                                     {...getTagProps({ index })}
                                   />
@@ -201,10 +260,10 @@ const Product = ({ ...others }) => {
                                 if (option.inputValue) {
                                     return option.inputValue;
                                 }
-                                return option.name;
+                                return option.title;
                             }}
 
-                            renderInput={(params) => <TextField {...params} label="Kategorien" />}
+                            renderInput={(params) => <TextField {...params} label="Categories" />}
                         />
 
                     </Grid>
@@ -217,7 +276,7 @@ const Product = ({ ...others }) => {
                 <Box sx={{ mt: 2 }}>
                     <AnimateButton>
                         <Button disableElevation disabled={formik.isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
-                            Bestätigen
+                            Submit
                         </Button>
                     </AnimateButton>
                 </Box>

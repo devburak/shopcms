@@ -2,6 +2,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ArticleIcon from '@mui/icons-material/Article';
 import ExplicitIcon from '@mui/icons-material/Explicit';
 import CategoryIcon from '@mui/icons-material/Category';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 const dashboard = {
     id: 'dashboard',
     title: 'Dashboard',
@@ -83,7 +84,6 @@ const categories = {
         title: 'Categories',
         type: 'collapse',
         icon: CategoryIcon,
-  
         children: [
           {
             id: 'newCategory',
@@ -103,13 +103,44 @@ const categories = {
       }
     ]
   };
+const products = {
+  id: 'product',
+  title: 'Products',
+  caption: 'Product Operation',
+  type: 'group',
+  children: [
+    {
+      id: 'product',
+      title: 'Products',
+      type: 'collapse',
+      icon: RestaurantIcon,
+      children: [
+        {
+          id: 'newProduct',
+          title: 'New Product',
+          type: 'item',
+          url: '/product',
+          target: false
+        },
+        {
+          id: 'listProduct',
+          title: 'Products',
+          type: 'item',
+          url: '/products',
+          target: false
+        }
+      ]
+    }
+  ]
+
+}
 const menuItems = {
-    items: [
-        dashboard, 
-        pages, 
-        categories,
-       sample
-    ]
-  };
+  items: [
+    dashboard,
+    products,
+    categories,
+    sample
+  ]
+};
   
   export default menuItems;
