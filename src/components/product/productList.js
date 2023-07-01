@@ -1,7 +1,24 @@
 import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import PropTypes from 'prop-types';
-const ProductList = ({ products, onEdit, onDelete }) => {
+const ProductListForm = ({ products, onEdit, onDelete,pageModel, sortModel,handlePageChange ,onSortModelChange,rowCount  }) => {
+
+  const handleEditProduct = (id) => {
+    // Düzenleme işlemi için gerekli navigasyon veya işlemler burada gerçekleştirilebilir
+    onEdit(id);
+  };
+
+  const handleDeleteProduct = (id) => {
+    // Silme işlemi için gerekli işlemler burada gerçekleştirilebilir
+    onDelete(id);
+  };
+
+  const handleSortModelChange = React.useCallback((sortModel) => {
+    // Here you save the data you need from the sort model
+   console.log(sortModel)
+   onSortModelChange(sortModel)
+  }, []);
+
   const columns = [
     { field: 'name', headerName: 'Name', width: 200 },
     {
@@ -37,16 +54,35 @@ const ProductList = ({ products, onEdit, onDelete }) => {
       width: 120,
       renderCell: (params) => (
         <>
-          <button onClick={() => onEdit(params.row)}>Edit</button>
-          <button onClick={() => onDelete(params.row)}>Delete</button>
+          <button onClick={() => handleEditProduct(params.id)}>Edit</button>
+          <button onClick={() => handleDeleteProduct(params.id)}>Delete</button>
         </>
       ),
     },
   ];
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
-      <DataGrid rows={products} columns={columns} />
+    <div style={{ minHeight: 400, width: '100%' }}>
+      {products ?
+        <DataGrid
+          rows={products}
+          columns={columns}
+          getRowId={(row) => row._id}
+          disableColumnMenu={true}
+          sortingMode="server"
+          onSortModelChange={handleSortModelChange}
+          onPageSizeChange={handlePageChange}
+          onPageChange={handlePageChange}
+          disableColumnSelector={true}
+          disableRowSelectionOnClick={true}
+          onPaginationModelChange={handlePageChange}
+          paginationMode='server'
+          paginationModel={pageModel}
+          sortModel={sortModel}
+          rowCount={rowCount}
+          sx={{ minHeight: 400 }}
+        /> :
+        " ...loading"}
     </div>
   );
 };
@@ -71,4 +107,4 @@ ProductListForm.propTypes = {
 };
 
 
-export default ProductList;
+export default ProductListForm;

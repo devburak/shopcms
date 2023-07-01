@@ -12,6 +12,7 @@ import usePrivateRoute from './PrivateRoute';
 const Dashboard = Loadable(lazy(() => import('../pages/dasboard')));
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('../pages/sample')));
+const ProductListPage = Loadable(lazy(() => import('../pages/productList')));
 const ProductPage = Loadable(lazy(() => import('../pages/product')));
 const CategoryListPage = Loadable(lazy(() => import('../pages/categoryList')));
 const CategoryPage = Loadable(lazy(() => import('../pages/category')));
@@ -42,6 +43,7 @@ export default function ThemeRoutes() {
             <>
               <Route path="/" element={<Dashboard />} />
               <Route path="/sample-page" element={<SamplePage />} />
+              <Route path="/products" element={<ProductListPage />} />
               <Route path="/product/:productId?" element={<ProductPage />} />
               <Route path="/categories" element={<CategoryListPage />} />
               <Route path="/category/:categoryId?" element={<CategoryPage />} />

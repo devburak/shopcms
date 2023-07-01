@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import CategoryList from '../components/category/categoryList';
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
+
 const CategoryListPage = () => {
   const [categories, setCategories] = useState([]);
   const [info,setInfo] = useState({})
@@ -11,13 +12,13 @@ const CategoryListPage = () => {
 
   const [sortModel, setSortModel] = useState([
     {
-      field:'title',
-      sort:'asc'
+      field: 'title',
+      sort: 'asc'
     }
   ]);
   const [pageModel, setPageModel] = useState({
-    page:1,
-    pageSize:25
+    page: 1,
+    pageSize: 25
   });
 
   const handleEditCategory = (id) => {
@@ -31,45 +32,45 @@ const CategoryListPage = () => {
     console.log('Delete category with id:', id);
   };
 
- const fetchCategories = async () => {
-  try {
-    const response = await api.get(`/api/category/withnop`, {
-      params: {
-        page: pageModel.page,
-        limit: pageModel.pageSize,
-        sort: sortModel.map((item) => `${item.field}:${item.sort}`).join(","),
-      },
-    });
-    const {categories , ...info} = response.data;
-    console.log(info)
-    setCategories(categories);
-    setInfo(info)
-  } catch (error) {
-    console.log(error);
-  }
-};
+  const fetchCategories = async () => {
+    try {
+      const response = await api.get(`/api/category/withnop`, {
+        params: {
+          page: pageModel.page,
+          limit: pageModel.pageSize,
+          sort: sortModel.map((item) => `${item.field}:${item.sort}`).join(","),
+        },
+      });
+      const { categories, ...info } = response.data;
+      console.log(info)
+      setCategories(categories);
+      setInfo(info)
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-const handleSortModelChange = (model) => {
-  setSortModel(model);
- 
-};
+  const handleSortModelChange = (model) => {
+    setSortModel(model);
 
-const handlePageChange = (params) => {
-  setPageModel(params);
- 
-};
+  };
+
+  const handlePageChange = (params) => {
+    setPageModel(params);
+
+  };
 
   useEffect(() => {
     fetchCategories();
-  }, [pageModel,sortModel]);
+  }, [pageModel, sortModel]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setRowCount((prevRowCount) =>
       info?.totalDocs !== undefined
         ? info?.totalDocs
         : prevRowCount,
     );
-  },[info])
+  }, [info])
 
   return (
     <div>

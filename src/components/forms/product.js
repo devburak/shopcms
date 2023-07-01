@@ -158,16 +158,16 @@ const Product = ({ initialValues, onSubmit }) => {
                     <FileSelector
                         open={openSelector}
                         handleClose={() => setOpenSelector(false)}
-                        selectedFiles={images}
+                        selectedFiles={formik.values.storedFiles}
                         handleToggleFiles={handleSelectImages}
                     />
                 </Grid>
             </Grid>
             <Grid container spacing={2}>
-                <Grid item xs={12} sx={{ overflowX: 'auto' }}>
+                <Grid item xs={12} sx={{ overflowX: 'auto', display:'flex' }}>
                   {
                     formik.values.storedFiles.map((file, index) => (
-                        <Box key={index} sx={{ mb: 2 }}>  
+                        <Box key={index} sx={{ m: 2}}>  
                           <img src={file?.thumbnailUrl} alt={file?.filename} onClick={()=>handleSelectImages(file)} />
                         </Box>
                         ))
@@ -275,7 +275,7 @@ const Product = ({ initialValues, onSubmit }) => {
                 )}
                 <Box sx={{ mt: 2 }}>
                     <AnimateButton>
-                        <Button disableElevation disabled={formik.isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
+                        <Button   fullWidth size="large" type="submit" variant="contained" color="secondary">
                             Submit
                         </Button>
                     </AnimateButton>

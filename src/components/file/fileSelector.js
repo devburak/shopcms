@@ -9,16 +9,6 @@ import GenericAlert from '../genericAlert';
 import config from '../../config';
 import { UserContext } from '../../store/user/userContext';
 
-const defaultFiles = [{
-  _id: "6484a11c65555515a498072a",
-  fileName: "2023_1.jpeg",
-  size: 135259,
-  mimeType: "image/jpeg",
-  fileUrl: "https://xfs2.ikon-x.com.tr/lemonbistro/2023_1.jpeg",
-  thumbnailUrl: "https://xfs2.ikon-x.com.tr/lemonbistro/thumbnails/th_2023_1.webp",
-  uploadedBy: "64733699b76cf2a894853020",
-  uploadedAt: "2023-06-10T16:13:16.493Z"
-}];
 
 
 const Thumbnail = styled(Box)(({ theme }) => ({
@@ -309,7 +299,7 @@ FileSelector.propTypes = {
 
 FileSelector.defaultProps = {
   open: false,
-  images: defaultFiles
+
 };
 
 export default FileSelector;
