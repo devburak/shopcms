@@ -2,7 +2,7 @@
 import { lazy } from 'react';
 // project imports
 import Loadable from '../layout/loadable';
-import { useRoutes, Navigate, Routes, Route, Outlet, BrowserRouter as Router, } from 'react-router-dom';
+import {Navigate, Routes, Route, Outlet, BrowserRouter as Router, } from 'react-router-dom';
 // routes
 import MainRoutes from './MainRoutes';
 import AuthenticationRoutes from './AuthenticationRoutes';
@@ -19,7 +19,7 @@ const CategoryPage = Loadable(lazy(() => import('../pages/category')));
 // login option 3 routing
 const Login = Loadable(lazy(() => import('../pages/login')));
 const Signup = Loadable(lazy(() => import('../pages/signup')));
-
+const ForgetPassword = Loadable(lazy(() => import('../pages/forgetPassword')));
 const MinimalLayout = () => (
   <>
     <Outlet />
@@ -36,8 +36,10 @@ export default function ThemeRoutes() {
   const isLoggedIn = usePrivateRoute();
   return (
     <Routes>
+      
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path='/forget/:code?' element={<ForgetPassword />} />
       <Route path="/" element={<MainLayout />}>
           {isLoggedIn ? (
             <>

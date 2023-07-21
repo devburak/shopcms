@@ -7,7 +7,6 @@ import {
   Box,
   Button,
   Checkbox,
-  Divider,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -16,9 +15,7 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  TextField,
-  Typography,
-  useMediaQuery
+  Typography
 } from '@mui/material';
 
 // third party
@@ -39,7 +36,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 const Register = ({ ...others }) => {
   const theme = useTheme();
   const scriptedRef = useScriptRef();
-  const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
+  // const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const [showPassword, setShowPassword] = useState(false);
   const [checked, setChecked] = useState(true);
 
